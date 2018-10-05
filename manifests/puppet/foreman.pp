@@ -9,6 +9,7 @@
 # @param db_manage              Manage the DB backend.
 # @param db_manage_rake         Manage the DB rake jobs.
 # @param db_password            Db password.
+# @param enc                    External node classifier.
 # @param foreman_admin_password Foreman admin password.
 # @param foreman_host           Foreman fqdn.
 # @param foreman_repo           Foreman repo to use.
@@ -19,6 +20,7 @@
 # @param passenger              Run behind passenger.
 # @param plugins                Foreman plugins to install.
 # @param protocol               Protocol to reach Foreman.
+# @param reports                Should Foreman receive reports. 
 # @param selinux                Install foreman-selinux.
 # @param server_ssl_ca          SSL ca.
 # @param server_ssl_chain       SSL chain.
@@ -35,6 +37,7 @@ class profiles::puppet::foreman (
   Boolean $db_manage = false,
   Boolean $db_manage_rake = true,
   String $db_password = 'foreman',
+  Boolean $enc = false,
   String $foreman_admin_password = 'secret',
   String $foreman_host  = $::fqdn,
   String $foreman_repo = '1.18',
@@ -45,6 +48,7 @@ class profiles::puppet::foreman (
   Boolean $passenger = true,
   Hash $plugins = {},
   String $protocol = 'https',
+  Boolean $reports = false,
   Boolean $selinux = false,
   String $server_ssl_ca = '/etc/puppetlabs/puppet/ssl/certs/ca.pem',
   String $server_ssl_chain = '/etc/puppetlabs/puppet/ssl/certs/ca.pem',
@@ -90,6 +94,12 @@ class profiles::puppet::foreman (
     foreman_url => "${protocol}://${foreman_host}",
     username    => 'admin',
     password    => $foreman_admin_password,
+  }
+  if ( $enc or $reports ) {
+    class { '::foreman::puppetmaster':
+      reports => $reports,
+      enc => $enc,
+    }
   }
   create_resources(::foreman::plugin, $plugins)
   $settings_defaults = {
