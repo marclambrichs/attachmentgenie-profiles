@@ -11,7 +11,7 @@ class profiles::monitoring::collectd (
   Hash $additional_packages = {},
   Boolean $manage_repo      = false,
   String $minimum_version   = '5.5',
-  Hash$plugins              = {},
+  Hash $plugins             = {},
 ) {
   class { '::collectd':
     manage_repo     => $manage_repo,
