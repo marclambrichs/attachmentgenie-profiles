@@ -3,28 +3,28 @@
 # @example when declaring the logstash class
 #  class { '::profiles::monitoring::logstash': }
 #
+# @param auto_upgrade Install the latest version.
 # @param config_files Content for logstash input, filters and output.
 # @param ensure       Present or absent.
 # @param group        Logstash group.
 # @param manage_repo  Setup repository to install logstash from.
-# @param repo_version Version family to install from.
 # @param user         Logstash user.
 # @param version      Which version of logstash to install.
 class profiles::monitoring::logstash (
+  Boolean $auto_upgrade = false,
   Hash $config_files = {},
   Enum[absent,present] $ensure = present,
-  String $group = 'root',
+  String $group = 'logstash',
   Boolean $manage_repo = false,
-  String $repo_version = '5.x',
-  String $user = 'root',
-  Boolean $version = false,
+  String $user = 'logstash',
+  String $version = '6.4'
 ){
   class { '::logstash':
     ensure         => $ensure,
+    auto_upgrade   => $auto_upgrade,
     logstash_group => $group,
     logstash_user  => $user,
     manage_repo    => $manage_repo,
-    repo_version   => $repo_version,
     version        => $version,
   }
   create_resources(::logstash::configfile, $config_files)
