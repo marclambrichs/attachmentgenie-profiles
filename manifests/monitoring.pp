@@ -5,6 +5,7 @@
 #
 # @param carbon_relay Manage carbon_relay on this node.
 # @param collectd     Manage collectd on this node.
+# @param filebeat     Manage filebeat on this node.
 # @param icinga2      Manage icinga on this node.
 # @param logstash     Manage logstash on this node.
 # @param prometheus   Manage prometheus on this node.
@@ -12,6 +13,7 @@
 class profiles::monitoring (
   Boolean $carbon_relay = false,
   Boolean $collectd = false,
+  Boolean $filebeat = false,
   Boolean $icinga2= false,
   Boolean $logstash = false,
   Boolean $prometheus = false,
@@ -22,6 +24,9 @@ class profiles::monitoring (
   }
   if $collectd {
     class { '::profiles::monitoring::collectd': }
+  }
+  if $filebeat {
+    class { '::profiles::monitoring::filebeat': }
   }
   if $icinga2 {
     class { '::profiles::monitoring::icinga2': }
