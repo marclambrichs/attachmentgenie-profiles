@@ -15,6 +15,7 @@ class profiles::monitoring::logstash (
   Hash $config_files = {},
   Enum[absent,present] $ensure = present,
   String $group = 'logstash',
+  Array $jvm_options = [],
   Boolean $manage_repo = false,
   String $user = 'logstash',
   String $version = '6.4'
@@ -22,6 +23,7 @@ class profiles::monitoring::logstash (
   class { '::logstash':
     ensure         => $ensure,
     auto_upgrade   => $auto_upgrade,
+    jvm_options    => $jvm_options,
     logstash_group => $group,
     logstash_user  => $user,
     manage_repo    => $manage_repo,
