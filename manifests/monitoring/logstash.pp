@@ -8,6 +8,7 @@
 # @param ensure       Present or absent.
 # @param group        Logstash group.
 # @param manage_repo  Setup repository to install logstash from.
+# @param pipelines    Define array of pipelines.
 # @param user         Logstash user.
 # @param version      Which version of logstash to install.
 class profiles::monitoring::logstash (
@@ -17,6 +18,7 @@ class profiles::monitoring::logstash (
   String $group = 'logstash',
   Array $jvm_options = [],
   Boolean $manage_repo = false,
+  Array $pipelines = [],
   String $user = 'logstash',
   String $version = '6.4'
 ){
@@ -27,6 +29,7 @@ class profiles::monitoring::logstash (
     logstash_group => $group,
     logstash_user  => $user,
     manage_repo    => $manage_repo,
+    pipelines      => $pipelines,
     version        => $version,
   }
   create_resources(::logstash::configfile, $config_files)
