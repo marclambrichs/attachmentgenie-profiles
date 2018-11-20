@@ -9,6 +9,7 @@
 # @param nodejs Manage nodejs on this node.
 # @param php    Manage php on this node.
 # @param python Manage python on this node.
+# @param r      Manage r on this node.
 # @param ruby   Manage ruby on this node.
 # @param scala  Manage scala on this node.
 class profiles::runtime (
@@ -18,6 +19,7 @@ class profiles::runtime (
   Boolean $nodejs = false,
   Boolean $php    = false,
   Boolean $python = false,
+  Boolean $r      = false,
   Boolean $ruby   = false,
   Boolean $scala  = false,
 ) {
@@ -38,6 +40,9 @@ class profiles::runtime (
   }
   if $python {
     class { '::profiles::runtime::python': }
+  }
+  if $r {
+    class { '::profiles::runtime::r': }
   }
   if $ruby {
     class { '::profiles::runtime::ruby': }
