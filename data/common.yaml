@@ -38,6 +38,9 @@ lookup_options:
   profiles::monitoring::icinga2::services:
     merge:
       strategy: hash
+  profiles::secrets::vault::listener:
+    merge:
+      strategy: hash
 
 profiles::monitoring::icinga2::services:
   linux_icinga:
@@ -127,3 +130,6 @@ profiles::monitoring::icinga2::timeperiods:
       'saturday': '00:00-24:00'
       'sunday': '00:00-24:00'
 
+profiles::secrets::vault::listener:
+  tcp:
+    'address': '127.0.0.1:8200'
