@@ -132,7 +132,8 @@ class profiles::metrics::grafana (
         daily_rotate    => $log_daily_rotate,
         max_days        => $log_max_days,
       },
-      security          => {
+      provisioning_dashboards => $dashboards,
+      security                => {
         admin_user                  => $admin_user,
         admin_password              => $admin_password,
         secret_key                  => $secret_key,
@@ -161,7 +162,6 @@ class profiles::metrics::grafana (
     grafana_user     => $admin_user,
     grafana_password => $admin_password,
   }
-  create_resources( ::profiles::metrics::grafana::dashboard, $dashboards, $defaults )
 
   create_resources( ::profiles::metrics::grafana::datasource, $datasources, $defaults )
 }
