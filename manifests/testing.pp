@@ -8,11 +8,15 @@
 class profiles::testing (
   Boolean $develop = false,
   Boolean $jenkins = false,
+  Boolean $packer  = false,
 ){
   if $develop {
     class { '::profiles::testing::develop': }
   }
   if $jenkins {
     class { '::profiles::testing::jenkins': }
+  }
+  if $packer {
+    class { '::profiles::testing::packer': }
   }
 }
