@@ -9,11 +9,13 @@
 # @param manage_repo     Manage rpm repository.
 # @param plugins         Plugins to install.
 # @param purge_plugins   Remove unmanaged plugins.
+# @param version         Pick jenkins version.
 class profiles::testing::jenkins (
   Hash $config_hash = { 'JENKINS_LISTEN_ADDRESS' => { 'value' => '127.0.0.1' }},
   Boolean $lts = true,
   Boolean $manage_repo = false,
   Hash $plugin_hash = {},
+  String $version = "installed",
 ) {
   class { '::jenkins':
     config_hash        => $config_hash,
@@ -22,5 +24,6 @@ class profiles::testing::jenkins (
     lts                => $lts,
     plugin_hash        => $plugin_hash,
     repo               => $manage_repo,
+    version            => $version,
   }
 }
