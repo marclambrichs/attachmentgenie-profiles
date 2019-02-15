@@ -4,7 +4,6 @@
 #  class { '::profiles::puppet::foreman': }
 #
 # @param configure_epel_repo    Configure epel repository
-# @param custom_repo            Inject your own foreman repo to configure.
 # @param db_host                Db host.
 # @param db_manage              Manage the DB backend.
 # @param db_manage_rake         Manage the DB rake jobs.
@@ -30,7 +29,6 @@
 # @param user_groups            List of groups for foreman user to join.
 class profiles::puppet::foreman (
   Boolean $configure_epel_repo = false,
-  Boolean $custom_repo = false,
   String $db_host = 'localhost',
   Boolean $db_manage = false,
   Boolean $db_manage_rake = true,
@@ -61,10 +59,8 @@ class profiles::puppet::foreman (
     $ssl  = false
   }
   class { '::foreman':
-    admin_password        => $foreman_admin_password,
     authentication        => true,
     configure_epel_repo   => $configure_epel_repo,
-    custom_repo           => $custom_repo,
     db_host               => $db_host,
     db_manage             => $db_manage,
     db_manage_rake        => $db_manage_rake,
